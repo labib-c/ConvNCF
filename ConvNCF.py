@@ -3,7 +3,7 @@ from __future__ import division
 import os
 import math
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
 from multiprocessing import Pool
 from multiprocessing import cpu_count
 import argparse
@@ -15,7 +15,7 @@ from Dataset import Dataset
 from saver import GMFSaver
 
 # use conv instead of pooling
-
+tf.disable_v2_behavior()
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 _user_input = None
