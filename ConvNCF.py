@@ -72,6 +72,8 @@ def parse_args():
                         help='Calculate train_auc or not')
     parser.add_argument('--keep', type=float, default=1.0,
                         help='keep probability in training')
+    parser.add_argument('--test', type=int, default=0, 
+                        help="Test pretrained model without training")
     return parser.parse_args()
 
 
@@ -562,7 +564,18 @@ if __name__ == '__main__':
     #start trainging
     #saver = GMFSaver()
     #saver.setPrefix("./param")
-    training(model, dataset, args)
+    if args.test == 0:
+        training(model, dataset, args)
+    else:
+        with tf.Session() as sess:
+            # pretrain or not
+            sess.run(tf.global_variables_initializer())
+
+            # restore the weights when pretrained
+            if args.pretrain:
+                #saver_ckpt.restore(sess, "Pretrain/MF_BPR/embed_32_32_32_32_32_32/1e-06_0_10-1440")
+                model.load_parameter_MF(sess, "best_%s_MF.npy" % args.dataset)
+                dxyeval(sess,model,dataset)
 
 
 
