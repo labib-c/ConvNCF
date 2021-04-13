@@ -3,7 +3,8 @@ from __future__ import division
 import os
 import math
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 from multiprocessing import Pool
 from multiprocessing import cpu_count
 import argparse
