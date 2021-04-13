@@ -264,7 +264,7 @@ class ConvNCF:
         self._create_optimizer()
 
     def load_parameter_MF(self, sess, path):
-        ps = np.load(path)
+        ps = np.load(path, allow_pickle=True)
         ap = tf.assign(self.embedding_P, ps[0])
         aq = tf.assign(self.embedding_Q, ps[1])
         #ah = tf.assign(self.h, np.diag(ps[2][:,0]).reshape(4096,1))
@@ -272,7 +272,7 @@ class ConvNCF:
         print "parameter loaded"
 
     def load_parameter_logloss(self, sess, path):
-        ps = np.load(path).tolist()
+        ps = np.load(path, allow_pickle=True).tolist()
         ap = tf.assign(self.embedding_P, ps['P'])
         aq = tf.assign(self.embedding_Q, ps['Q'])
         sess.run([ap,aq])
